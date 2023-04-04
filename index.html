@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Registration Form</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.netlify.com/forms/v2/netlify-forms.js"></script>
+  </head>
+  <body>
+    <h1>Registration Form</h1>
+    <form name="registration" method="POST" data-netlify="true">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="age">Age:</label>
+      <input type="number" id="age" name="age" required />
+
+      <label for="gender">Gender:</label>
+      <select id="gender" name="gender" required>
+        <option value="">--Select Gender--</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+
+      <label for="starting-weight">Starting Weight (kg):</label>
+      <input type="number" id="starting-weight" name="starting-weight" step="0.01" required />
+
+      <input type="hidden" name="form-name" value="registration-form">
+      <button type="submit">Submit</button>
+    </form>
+
+    <script>
+      const form = document.forms.registration;
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const formData = new FormData(form);
+        fetch('/', {
+          method: 'POST',
+          body: formData,
+        })
+          .then(() => {
+            alert('Registration successful!');
+            form.reset();
+          })
+          .catch((error) => {
+            alert('Registration failed. Please try again later.');
+            console.error(error);
+          });
+      });
+    </script>
+  </body>
+</html>
